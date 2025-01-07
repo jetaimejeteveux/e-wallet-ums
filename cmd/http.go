@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	"ewallet-framework-1/helpers"
-	"ewallet-framework-1/internal/api"
-	"ewallet-framework-1/internal/services"
 	"github.com/gin-gonic/gin"
+	"github.com/jetaimejeteveux/e-wallet-ums/helpers"
+	"github.com/jetaimejeteveux/e-wallet-ums/internal/api"
+	"github.com/jetaimejeteveux/e-wallet-ums/internal/services"
 	"log"
 )
 

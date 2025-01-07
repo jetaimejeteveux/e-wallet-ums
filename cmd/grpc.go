@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"ewallet-framework-1/helpers"
+	"github.com/jetaimejeteveux/e-wallet-ums/helpers"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"log"

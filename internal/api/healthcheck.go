@@ -1,9 +1,9 @@
 package api
 
 import (
-	"ewallet-framework-1/helpers"
-	"ewallet-framework-1/internal/interfaces"
 	"github.com/gin-gonic/gin"
+	"github.com/jetaimejeteveux/e-wallet-ums/helpers"
+	"github.com/jetaimejeteveux/e-wallet-ums/internal/interfaces"
 	"net/http"
 )
 

@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"fmt"
+	"github.com/jetaimejeteveux/e-wallet-ums/models"
 	"log"
 
 	"github.com/sirupsen/logrus"
@@ -21,4 +22,6 @@ func SetupMySQL() {
 	}
 
 	logrus.Info("Successfully connect to database..")
+
+	DB.AutoMigrate(&models.UserSession{}, &models.User{})
 }
