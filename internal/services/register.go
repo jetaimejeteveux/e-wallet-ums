@@ -1,0 +1,31 @@
+package services
+
+import (
+	"context"
+
+	"github.com/jetaimejeteveux/e-wallet-ums/internal/interfaces"
+	"github.com/jetaimejeteveux/e-wallet-ums/models"
+	"golang.org/x/crypto/bcrypt"
+)
+
+type RegisterService struct {
+	RegisterRepo interfaces.IRegisterRepository
+}
+
+func (r *RegisterService) Register(ctx context.Context, request models.User) (interface{}, error) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return nil, err
+	}
+	request.Password = string(hashedPassword)
+
+	err = r.RegisterRepo.InsertUser(ctx, &request)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := request
+	resp.Password = ""
+	return resp, nil
+
+}
