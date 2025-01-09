@@ -15,8 +15,8 @@ type User struct {
 	Address     string    `json:"address" gorm:"column:address;type:text" `
 	Dob         string    `json:"dob" gorm:"column:dob;type:date"`
 	FullName    string    `json:"full_name" gorm:"column:full_name;type:varchar(100)" validate:"required"`
-	CreatedAt   time.Time `json:"-"`
-	UpdatedAt   time.Time `json:"-"`
+	CreatedAt   time.Time `json:"-" gorm:"column:created_at;type:timestamp"`
+	UpdatedAt   time.Time `json:"-" gorm:"column:updated_at;type:timestamp"`
 }
 
 func (*User) TableName() string {
@@ -29,10 +29,10 @@ func (u *User) Validate() error {
 }
 
 type UserSession struct {
-	ID                  uint `gorm:"primary_key"`
+	ID                  int `gorm:"primary_key"`
 	CreatedAt           time.Time
 	UpdatedAt           time.Time
-	UserID              uint      `json:"user_id" gorm:"type:int" validate:"required"`
+	UserID              int       `json:"user_id" gorm:"type:int" validate:"required"`
 	Token               string    `json:"token" gorm:"type:varchar(255)" validate:"required"`
 	RefreshToken        string    `json:"refresh_token" gorm:"type:varchar(255)" validate:"required"`
 	TokenExpired        time.Time `json:"-" validate:"required"`

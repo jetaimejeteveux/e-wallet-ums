@@ -10,17 +10,16 @@ import (
 	"github.com/jetaimejeteveux/e-wallet-ums/models"
 )
 
-type RegisterHandler struct {
-	RegisterService interfaces.IRegisterService
+type LoginHandler struct {
+	LoginService interfaces.ILoginService
 }
 
-func (api *RegisterHandler) Register(c *gin.Context) {
-	ctx := c.Request.Context()
-
+func (api *LoginHandler) Login(c *gin.Context) {
 	var (
 		log = helpers.Logger
+		ctx = c.Request.Context()
+		req models.LoginRequest
 	)
-	req := models.User{}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		log.Error("failed to parse request: ", err)
@@ -34,12 +33,12 @@ func (api *RegisterHandler) Register(c *gin.Context) {
 		return
 	}
 
-	resp, err := api.RegisterService.Register(ctx, req)
+	resp, err := api.LoginService.Login(ctx, req)
 	if err != nil {
-		log.Error("failed to register new user: ", err)
-		helpers.SendResponseHTTP(c, http.StatusInternalServerError, constants.ErrFailedRegisterUser, nil)
+		helpers.SendResponseHTTP(c, http.StatusInternalServerError, constants.ErrFailedLoginUser, nil)
 		return
 	}
 
 	helpers.SendResponseHTTP(c, http.StatusOK, constants.SuccessMessage, resp)
+
 }
