@@ -30,5 +30,5 @@ func (r *UserRepository) InsertUserSession(ctx context.Context, session *models.
 }
 
 func (r *UserRepository) DeleteUserSession(ctx context.Context, session *models.UserSession) error {
-	return r.DB.Exec("DELETE FROM user_sessions WHERE token = ?", session.Token).Error
+	return r.DB.Where("token = ?", session.Token).Error
 }
