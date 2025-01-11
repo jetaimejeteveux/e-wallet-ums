@@ -16,4 +16,5 @@ const (
 	ErrFailedGenerateToken        = "failed to generate token"
 	ErrFailedGenerateRefreshToken = "failed to generate refresh token"
 	ErrFailedInsertSession        = "failed to insert session token"
+	ErrFailedLogout               = "user failed to logout"
 )
