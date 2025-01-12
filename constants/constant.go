@@ -17,4 +17,6 @@ const (
 	ErrFailedGenerateRefreshToken = "failed to generate refresh token"
 	ErrFailedInsertSession        = "failed to insert session token"
 	ErrFailedLogout               = "user failed to logout"
+	ErrUnauthorized               = "error unauthorized"
+	ErrSessionNotFound            = "error session not found"
 )

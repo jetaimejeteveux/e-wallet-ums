@@ -21,7 +21,8 @@ func ServeHTTP() {
 	userV1.POST("/register", dependency.RegisterAPI.Register)
 	userV1.POST("/login", dependency.LoginAPI.Login)
 
-	userV1.DELETE("logout", dependency.LogoutAPI.Logout)
+	userV1WithAuth := userV1.Use(dependency.AuthMiddleware.MiddlewareValidateAuth)
+	userV1WithAuth.DELETE("/logout", dependency.LogoutAPI.Logout)
 
 	err := r.Run(":" + helpers.GetEnv("PORT", ""))
 	if err != nil {
@@ -34,6 +35,7 @@ type Dependency struct {
 	RegisterAPI    interfaces.IRegisterHandler
 	LoginAPI       interfaces.ILoginHandler
 	LogoutAPI      interfaces.ILogoutHandler
+	AuthMiddleware interfaces.IAuthMiddlewareHandler
 }
 
 func dependencyInject() Dependency {
@@ -63,10 +65,18 @@ func dependencyInject() Dependency {
 		LogoutSvc: logoutSvc,
 	}
 
+	authSvc := &services.AuthService{
+		UserRepo: userRepo,
+	}
+	authHandler := &api.AuthHandler{
+		AuthService: authSvc,
+	}
+
 	return Dependency{
 		UserRepository: userRepo,
 		RegisterAPI:    registerAPI,
 		LoginAPI:       loginAPI,
 		LogoutAPI:      logoutAPI,
+		AuthMiddleware: authHandler,
 	}
 }
