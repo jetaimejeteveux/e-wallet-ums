@@ -21,8 +21,9 @@ func ServeHTTP() {
 	userV1.POST("/register", dependency.RegisterAPI.Register)
 	userV1.POST("/login", dependency.LoginAPI.Login)
 
-	userV1WithAuth := userV1.Use(dependency.AuthMiddleware.MiddlewareValidateAuth)
-	userV1WithAuth.DELETE("/logout", dependency.LogoutAPI.Logout)
+	userV1WithAuth := userV1.Use()
+	userV1WithAuth.DELETE("/logout", dependency.Middleware.MiddlewareValidateAuth, dependency.LogoutAPI.Logout)
+	userV1WithAuth.PUT("/refresh/token", dependency.Middleware.MiddlewareRefreshToken, dependency.RefreshTokenAPI.RefreshToken)
 
 	err := r.Run(":" + helpers.GetEnv("PORT", ""))
 	if err != nil {
@@ -31,11 +32,12 @@ func ServeHTTP() {
 }
 
 type Dependency struct {
-	UserRepository interfaces.IUserRepository
-	RegisterAPI    interfaces.IRegisterHandler
-	LoginAPI       interfaces.ILoginHandler
-	LogoutAPI      interfaces.ILogoutHandler
-	AuthMiddleware interfaces.IAuthMiddlewareHandler
+	UserRepository  interfaces.IUserRepository
+	RegisterAPI     interfaces.IRegisterHandler
+	LoginAPI        interfaces.ILoginHandler
+	LogoutAPI       interfaces.ILogoutHandler
+	Middleware      interfaces.IMiddlewareHandler
+	RefreshTokenAPI interfaces.IRefreshTokenHandler
 }
 
 func dependencyInject() Dependency {
@@ -65,18 +67,29 @@ func dependencyInject() Dependency {
 		LogoutSvc: logoutSvc,
 	}
 
+	refreshTokenSvc := &services.RefreshTokenService{
+		UserRepo: userRepo,
+	}
+
 	authSvc := &services.AuthService{
 		UserRepo: userRepo,
 	}
-	authHandler := &api.AuthHandler{
-		AuthService: authSvc,
+
+	middlewareHandler := &api.MiddlewareHandler{
+		AuthService:         authSvc,
+		RefreshTokenService: refreshTokenSvc,
+	}
+
+	refreshTokenHandler := &api.RefreshTokenHandler{
+		RefreshTokenService: refreshTokenSvc,
 	}
 
 	return Dependency{
-		UserRepository: userRepo,
-		RegisterAPI:    registerAPI,
-		LoginAPI:       loginAPI,
-		LogoutAPI:      logoutAPI,
-		AuthMiddleware: authHandler,
+		UserRepository:  userRepo,
+		RegisterAPI:     registerAPI,
+		LoginAPI:        loginAPI,
+		LogoutAPI:       logoutAPI,
+		Middleware:      middlewareHandler,
+		RefreshTokenAPI: refreshTokenHandler,
 	}
 }

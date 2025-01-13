@@ -41,5 +41,17 @@ func (r *UserRepository) GetUserSessionByToken(ctx context.Context, token string
 	}
 
 	return resp, nil
+}
 
+func (r *UserRepository) UpdateTokenByRefreshToken(ctx context.Context, req *models.RefreshTokenRequest) error {
+	return r.DB.Model(&models.UserSession{}).Where("refresh_token = ?", req.RefreshToken).Update("token", req.AccessToken).Error
+}
+
+func (r *UserRepository) GetUserSessionByRefreshToken(ctx context.Context, refreshToken string) (*models.UserSession, error) {
+	var resp *models.UserSession
+	err := r.DB.Where("refresh_token = ?", refreshToken).First(&resp).Error
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }

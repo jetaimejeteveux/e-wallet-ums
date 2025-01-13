@@ -19,4 +19,8 @@ const (
 	ErrFailedLogout               = "user failed to logout"
 	ErrUnauthorized               = "error unauthorized"
 	ErrSessionNotFound            = "error session not found"
+	ErrFailedUpdateToken          = "error update token in db"
+	ErrFailedGetToken             = "failed to get token from context"
+	ErrFailedParseToken           = "failed to parse token"
+	ErrFailedRefreshToken         = "failed to refresh token"
 )
