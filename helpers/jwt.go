@@ -9,6 +9,8 @@ import (
 )
 
 type ClaimToken struct {
+	UserID   int    `json:"user_id"`
+	Email    string `json:"email"`
 	Username string `json:"username"`
 	Fullname string `json:"fullname"`
 	jwt.RegisteredClaims

@@ -9,7 +9,9 @@ const (
 const (
 	ErrFailedParseRequest         = "failed to parse request"
 	ErrFailedValidateRequest      = "failed to validate request"
+	ErrFailedValidateToken        = "failed to validate token"
 	ErrFailedRegisterUser         = "failed to register user"
+	ErrFailedGetUserSession       = "failed to get user session"
 	ErrFailedLoginUser            = "user failed to login"
 	ErrFailedGetUser              = "failed to get user"
 	ErrUserNotFound               = "user not found"
