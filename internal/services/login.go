@@ -25,11 +25,11 @@ func (s *LoginService) Login(ctx context.Context, req models.LoginRequest) (*mod
 
 	userDetail, err := s.UserRepo.GetUserByUsername(ctx, req.Username)
 	if err != nil {
-		logger.Info("error getting user from db = ", err)
+		logger.Error("error getting user from db = ", err)
 		return nil, errors.New(constants.ErrFailedGetUser)
 	}
 	if userDetail == nil {
-		logger.Info("error user not found")
+		logger.Error("error user not found")
 		return nil, errors.New(constants.ErrUserNotFound)
 	}
 
@@ -40,13 +40,13 @@ func (s *LoginService) Login(ctx context.Context, req models.LoginRequest) (*mod
 
 	token, err := helpers.GenerateToken(ctx, userDetail.Username, userDetail.FullName, constants.Token, now)
 	if err != nil {
-		logger.Info("failed to generate token: ", err)
+		logger.Error("failed to generate token: ", err)
 		return nil, errors.New(constants.ErrFailedGenerateToken)
 	}
 
 	refreshToken, err := helpers.GenerateToken(ctx, userDetail.Username, userDetail.FullName, constants.RefreshToken, now)
 	if err != nil {
-		logger.Info("failed to generate token: ", err)
+		logger.Error("failed to generate token: ", err)
 		return nil, errors.New(constants.ErrFailedGenerateRefreshToken)
 	}
 
@@ -59,7 +59,7 @@ func (s *LoginService) Login(ctx context.Context, req models.LoginRequest) (*mod
 	}
 	err = s.UserRepo.InsertUserSession(ctx, userSession)
 	if err != nil {
-		logger.Info("failed to insert session token: ", err)
+		logger.Error("failed to insert session token: ", err)
 		return nil, errors.New(constants.ErrFailedInsertSession)
 	}
 
