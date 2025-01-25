@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/jetaimejeteveux/e-wallet-ums/models"
+	"github.com/jetaimejeteveux/e-wallet-ums/internal/models"
 	"gorm.io/gorm"
 )
 

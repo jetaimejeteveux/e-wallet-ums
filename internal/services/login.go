@@ -8,7 +8,7 @@ import (
 	"github.com/jetaimejeteveux/e-wallet-ums/constants"
 	"github.com/jetaimejeteveux/e-wallet-ums/helpers"
 	"github.com/jetaimejeteveux/e-wallet-ums/internal/interfaces"
-	"github.com/jetaimejeteveux/e-wallet-ums/models"
+	"github.com/jetaimejeteveux/e-wallet-ums/internal/models"
 	"golang.org/x/crypto/bcrypt"
 )
 

@@ -3,8 +3,8 @@ package services
 import (
 	"context"
 
+	"github.com/jetaimejeteveux/e-wallet-ums/internal/models"
 	"github.com/jetaimejeteveux/e-wallet-ums/internal/repository"
-	"github.com/jetaimejeteveux/e-wallet-ums/models"
 )
 
 type LogoutServices struct {

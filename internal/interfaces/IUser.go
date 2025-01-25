@@ -3,7 +3,7 @@ package interfaces
 import (
 	"context"
 
-	"github.com/jetaimejeteveux/e-wallet-ums/models"
+	"github.com/jetaimejeteveux/e-wallet-ums/internal/models"
 )
 
 type IUserRepository interface {

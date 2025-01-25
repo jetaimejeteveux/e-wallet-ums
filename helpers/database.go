@@ -2,8 +2,9 @@ package helpers
 
 import (
 	"fmt"
-	"github.com/jetaimejeteveux/e-wallet-ums/models"
 	"log"
+
+	"github.com/jetaimejeteveux/e-wallet-ums/internal/models"
 
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
