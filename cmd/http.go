@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jetaimejeteveux/e-wallet-ums/external"
 	"github.com/jetaimejeteveux/e-wallet-ums/helpers"
 	"github.com/jetaimejeteveux/e-wallet-ums/internal/api"
 	"github.com/jetaimejeteveux/e-wallet-ums/internal/interfaces"
@@ -46,8 +47,11 @@ func dependencyInject() Dependency {
 		DB: helpers.DB,
 	}
 
+	external := &external.External{}
+
 	registerSvc := &services.RegisterService{
 		UserRepo: userRepo,
+		External: external,
 	}
 	registerAPI := &api.RegisterHandler{
 		RegisterService: registerSvc,

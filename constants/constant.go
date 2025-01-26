@@ -25,4 +25,8 @@ const (
 	ErrFailedGetToken             = "failed to get token from context"
 	ErrFailedParseToken           = "failed to parse token"
 	ErrFailedRefreshToken         = "failed to refresh token"
+	ErrFailedMarshalJson          = "failed to marshal json"
+	ErrCreateNewRequest           = "failed creating new request"
+	ErrExecuteRequest             = "error execute request"
+	ErrDecodingJSON               = "error decoding json"
 )

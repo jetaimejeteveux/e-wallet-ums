@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 
+	externalInterfaces "github.com/jetaimejeteveux/e-wallet-ums/external/interfaces"
 	"github.com/jetaimejeteveux/e-wallet-ums/internal/interfaces"
 	"github.com/jetaimejeteveux/e-wallet-ums/internal/models"
 	"golang.org/x/crypto/bcrypt"
@@ -10,6 +11,7 @@ import (
 
 type RegisterService struct {
 	UserRepo interfaces.IUserRepository
+	External externalInterfaces.IExternal
 }
 
 func (r *RegisterService) Register(ctx context.Context, request models.User) (interface{}, error) {
@@ -20,6 +22,11 @@ func (r *RegisterService) Register(ctx context.Context, request models.User) (in
 	request.Password = string(hashedPassword)
 
 	err = r.UserRepo.InsertUser(ctx, &request)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = r.External.CreateWallet(ctx, request.ID)
 	if err != nil {
 		return nil, err
 	}
